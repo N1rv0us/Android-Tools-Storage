@@ -15,8 +15,8 @@ import os
 ###############
 # Config
 ###############
-apk_storage_path = "../apks/" # APKs Storage Paths
-session_storage_path = "../sessions/" # Sessions Storage Paths
+apk_storage_path = "./apks/" # APKs Storage Paths
+session_storage_path = "./sessions/" # Sessions Storage Paths
 max_dir_size = 1024*1024*1024 
 ###############
 # End Config

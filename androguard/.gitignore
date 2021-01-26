@@ -1,0 +1,6 @@
+apks/
+cert/
+sessions/
+*/__pycache__/
+*.pyc
+.vscode/
