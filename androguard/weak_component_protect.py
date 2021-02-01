@@ -33,7 +33,7 @@ def define_permission_collecter():
     for item in manifest.findall("permission"):
         tmp = {}
         name = item.get(NS_ANDROID + "name")
-        level = item.get(NS_ANDROID + "protectionLevel") if None else "0"
+        level = item.get(NS_ANDROID + "protectionLevel") if item.get("{http://schemas.android.com/apk/res/android}protectionLevel") != None else "0"
         group = item.get(NS_ANDROID + "permissionGroup")
 
         tmp["name"] = name
