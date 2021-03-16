@@ -95,6 +95,12 @@ function hookTelephoneManagerPart() {
         console.warn(printStack());
         return ret;
     }
+    TelephonyManager.getDeviceId.overload('int').implementation = function(slotIndex) {
+        var ret = this.getDeviceId(slotIndex);
+        console.log("catch deviceId : "+ret);
+        console.warn(printStack());
+        return ret
+    }
     //meid
     TelephonyManager.getMeid.overload('int').implementation = function(slotIndex) {
         var ret = this.getMeid(slotIndex);
@@ -120,17 +126,13 @@ function hookTelephoneManagerPart() {
 
 function printStack() {
     var Throwable = Java.use("java.lang.Throwable");
-    __printStack(Throwable.$new.getStackTrace());
-}
-
-function __printStack(stackElements) {
+    var stackElements = Throwable.$new().getStackTrace();
     var body = "Stack: " + stackElements[0];    
     for (var i = 0; i < stackElements.length; i++) {
-        body += "\\n    at " + stackElements[i];
+        body += "\n    at " + stackElements[i];
     }
     return body
 }
-
 
 /*** script running ***/
 if (Java.available) {
