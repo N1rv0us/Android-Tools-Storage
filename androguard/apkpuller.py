@@ -128,6 +128,8 @@ def isFileExist(file_path):
     ret = execShell(cmd)
     if "没有那个文件或目录" in str(ret):
         return False
+    elif "No such file or directory" in str(ret):
+        return False
     else:
         return True
 
@@ -143,8 +145,9 @@ def pull_apk(pkgName):
     cdextool = 'cdex_converter64'
     vdextool = 'vdexExtractor64'
 
-    tmp_path = '/home/mi/gitclone/androguard-store/'
+    tmp_path = './'
     out_path = tmp_path + 'apks/'+pkgName+'.apk'
+    print(out_path)
     if isFileExist(out_path):
         logging.info("pkg "+pkgName+" is Exist")
         return
@@ -222,9 +225,9 @@ def pull_apk(pkgName):
 if __name__ == "__main__":
     #print(get_pkg_list(mfilter='android'))
     #tool_pusher()
-    pull_apk('com.miui.powerkeeper')
-    pull_apk('com.android.provision')
+    #pull_apk('com.miui.powerkeeper')
+    #pull_apk('com.android.provision')
     pull_apk('com.miui.analytics')
-    pull_apk('com.miui.cloudbackup')
-    pull_apk('com.miui.securitycore')
-    pull_apk('com.miui.securitycenter')
+    #pull_apk('com.miui.cloudbackup')
+    #pull_apk('com.miui.securitycore')
+    #pull_apk('com.miui.securitycenter')
