@@ -85,7 +85,7 @@ def tool_pusher():
     ret = execShell(check_cmd+vdextool)
     logging.info(ret)
     if "No such file or directory" in str(ret):
-        cmd = 'adb push ./'+vdextool+" "+push_path
+        cmd = 'adb push ./tools/'+vdextool+" "+push_path
         ret = execShell(cmd)
         logging.info(ret)
         if 'd' in ret.keys():
@@ -99,7 +99,7 @@ def tool_pusher():
     ret = execShell(check_cmd+cdextool)
     logging.info(ret)
     if 'No such file or directory' in str(ret):
-        cmd = 'adb push ./'+cdextool+' '+push_path
+        cmd = 'adb push ./tools/'+cdextool+' '+push_path
         ret = execShell(cmd)
         logging.info(ret)
         if 'd' in ret.keys():
