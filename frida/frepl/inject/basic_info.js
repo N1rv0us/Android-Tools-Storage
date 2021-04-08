@@ -10,6 +10,7 @@ rpc.exports = {
     components : (tag) => getComponents(tag),
     packageinfo : (tag) => getPackageInfo(tag),
     appinfo : (tag) => getApplicationInfo(tag),
+    permission : () => getDefinesPermissions(),
     test : (str) => send(str)
 }
 
@@ -107,6 +108,26 @@ const getApplicationInfo = (TAG) => {
             return "Not Found";
         }
     })
+}
+
+const getDefinesPermissions = () => {
+    return wrapJavaperform(() => {
+        try {
+            var permissions = tPkgInfo["permissions"].value;
+            var retlist = new Array();
+            for(let i = 0; i<permissions.length; i++) {
+                var permission = permissions[i];
+                var name = permission["name"].value;
+                var protectLevel = permission.protectionToString(permission["protectionLevel"].value);
+
+                retlist[i] = {"name":name,"protectLevel":protectLevel}
+            }
+
+            return JSON.stringify(retlist)
+        } catch(e) {
+            return "Not Found"
+        }
+    });
 }
 
 const wrapJavaperform = (fn) => {

@@ -49,7 +49,7 @@ class AppUtils(AppAgent):
             return self.reslut_list["permissions"]
 
         permissions = {}
-        permissions["defines"] = self._api.packageinfo("permissions")
+        permissions["defines"] = json.loads(self._api.permission())
         permissions["uses"] = self._api.packageinfo("requestedPermissions")
 
         self.reslut_list["permissions"] = permissions
@@ -119,9 +119,13 @@ class AppUtils(AppAgent):
 
 
 if __name__ == "__main__":
-    my_apk = AppUtils("com.mi.android.globalFileexplorer")
-    activities = my_apk.getActivities()
-    for activity in activities:
-        for key in activity.keys():
-            print("{0} : {1}".format(key,activity[key]))
+    my_apk = AppUtils("com.iqiyi.i18n")
+    permissions = my_apk.getPermissions()
+    print("----- DEFINES PERMISSION -------")
+    for perm in permissions["defines"]:
+        print("- {0}".format(perm["name"]))
+        print("|__ protect:{0}".format(perm["protectLevel"]))
 
+    print("----- USES PERMISSION -------")
+    for perm in permissions["uses"]:
+        print("- {0}".format(perm))
