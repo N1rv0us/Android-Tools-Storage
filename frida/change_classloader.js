@@ -1,6 +1,6 @@
 if(Java.available) {
     Java.perform(function(){
-        var ClassLoaderFactory = Java.use("your.happened.xxx");
+        var ClassLoaderFactory = Java.use("com.abc");
 
         function stacktrace() {
             var thread = Java.use('java.lang.Thread');
@@ -36,13 +36,13 @@ if(Java.available) {
                console.log("success");
            }
        })
-       var RootFragment = Java.classFactory.use("com.abc.xxx");
-       RootFragment.run.implementation = function(arg) {
-            var ret = this.run(arg)
-            var stack = stacktrace()
-            console.warn(stack)
-            return ret;
-        }
+    //    var RootFragment = Java.classFactory.use("com.abc.xxx");
+    //    RootFragment.run.implementation = function(arg) {
+    //         var ret = this.run(arg)
+    //         var stack = stacktrace()
+    //         console.warn(stack)
+    //         return ret;
+    //     }
 
     })
 }

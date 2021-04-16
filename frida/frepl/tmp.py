@@ -3,8 +3,8 @@ import frida
 import codecs
 
 '''config'''
-app_name = "system_server"
-user_script_path = os.getcwd() + "/agent.js"
+app_name = "com.android.settings"
+user_script_path = os.getcwd() + "/tmp.js"
 connect_type = "usb"
 _device = None
 _session = None
@@ -24,6 +24,25 @@ def my_message_handler(message,payload):
     if message["type"] == "send":
         print(message['payload'])
 
+test_json_str = '''
+{
+    "package_name" : "com.android.settings",
+    "activity_name" : "com.abd.ctcp",
+    "action"  : "android.intent.action.SEND",
+    "flags" : [
+        "FLAG_ACTIVITY_NEW_TASK",
+        "GRANT_WRITE_URI_PERMISSION"
+    ],
+    "extra": [
+        {
+            "type":"string",
+            "key":"key",
+            "value":"value"
+        }
+    ]
+}
+'''
+
 def start():
     global _device
 
@@ -40,10 +59,7 @@ def start():
     _script.load()
 
     _api = _script.exports
-    #_api.test("com.qiyi.video")
-    _api.setpackage("com.miui.gallery")
-    print(_api.appinfo("abd"))
-    print(_api.packageinfo("requestedPermissions"))
+    _api.launchactivity(test_json_str)
 
 
 

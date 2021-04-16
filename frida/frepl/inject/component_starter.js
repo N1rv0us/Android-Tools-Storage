@@ -42,7 +42,7 @@ const BroadcastSender = (intent) => {
         const context = getApplicationContext();
 
         send(newIntent.toURI());
-        context.sendbroadcast(context);
+        context.sendBroadcast(context);
         send("send Broadcast Success");
     })
 }

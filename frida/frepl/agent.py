@@ -66,7 +66,7 @@ class AppAgent():
             self._script.on("message",lambda message,payload: self.my_message_handler(message,payload))
             self._script.load()
 
-            self._device.resume(pid)
+            self._device.resume(self.pid)
 
         self._api = self._script.exports
 
