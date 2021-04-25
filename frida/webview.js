@@ -8,19 +8,19 @@ if (Java.available) {
         const Map = Java.use("java.util.HashMap");
         const JavascriptInterface = Java.use("android.webkit.JavascriptInterface");
         
-        // try {
-        //     const QbSdk = Java.use("com.tencent.smtt.sdk.QbSdk");
+        try {
+            const QbSdk = Java.use("com.tencent.smtt.sdk.QbSdk");
 
-        //     QbSdk.getIsSysWebViewForcedByOuter.implementation = function() {
-        //         this.forceSysWebView();
-        //         console.log("Forcing USE System Webview");
+            QbSdk.getIsSysWebViewForcedByOuter.implementation = function() {
+                this.forceSysWebView();
+                console.log("Forcing USE System Webview");
                 
-        //         var ret = this.getIsSysWebViewForcedByOuter();
-        //         return ret;
-        //     }
-        // } catch(error) {
-        //     console.warn(error)
-        // }
+                var ret = this.getIsSysWebViewForcedByOuter();
+                return ret;
+            }
+        } catch(error) {
+            console.warn(error)
+        }
 
         webview.setWebViewClient.implementation = function(client) {
             var ret = this.setWebViewClient(client);
