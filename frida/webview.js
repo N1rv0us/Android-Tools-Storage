@@ -2,8 +2,8 @@ console.log("loading webview hooker ....");
 
 if (Java.available) {
     Java.perform(() => {
-        const webview = Java.use("android.webkit.WebView");
-        //const webview = Java.use("com.miui.webkit_api.WebView");
+        //const webview = Java.use("android.webkit.WebView");
+        const webview = Java.use("com.miui.webkit_api.WebView");
         const Arrays = Java.use("java.util.Arrays");
         const Map = Java.use("java.util.HashMap");
         const JavascriptInterface = Java.use("android.webkit.JavascriptInterface");
@@ -19,7 +19,7 @@ if (Java.available) {
                 return ret;
             }
         } catch(error) {
-            console.warn(error)
+            //console.warn(error)
         }
 
         webview.setWebViewClient.implementation = function(client) {
@@ -27,8 +27,8 @@ if (Java.available) {
             const name = client.getClass().getName().toString();
             //console.log("class : "+name);
 
-            client.shouldOverrideUrlLoading.overload("android.webkit.WebView","android.webkit.WebResourceRequest").implementation = function(webview,request) {
-            //client.shouldOverrideUrlLoading.overload('com.miui.webkit_api.WebView', 'com.miui.webkit_api.WebResourceRequest').implementation = function(webview,request) {
+            //client.shouldOverrideUrlLoading.overload("android.webkit.WebView","android.webkit.WebResourceRequest").implementation = function(webview,request) {
+            client.shouldOverrideUrlLoading.overload('com.miui.webkit_api.WebView', 'com.miui.webkit_api.WebResourceRequest').implementation = function(webview,request) {
                 const cls_name = this.getClass().getName().toString();
                 const fromUrl = webview.getUrl();
                 const targetUrl = request.getUrl().toString();
@@ -41,7 +41,7 @@ if (Java.available) {
                     requestHeaders.push(entry.toString())
                 }
                 } catch(error) {
-                    console.error(error)
+                    //console.error(error)
                 }
                 var details = {};
                 details['class_name'] = cls_name;
@@ -71,6 +71,8 @@ if (Java.available) {
             console.log("Now Loading URL : "+url);
 
             console.log("webview instance status : "+JSON.stringify(status,null,"\t"));
+
+            //console.warn(printStack());
             return ret;
         }
 
@@ -134,4 +136,14 @@ if (Java.available) {
             return ret;
         }
     })
+}
+
+function printStack() {
+    var Throwable = Java.use("java.lang.Throwable");
+    var stackElements = Throwable.$new().getStackTrace();
+    var body = "Stack: " + stackElements[0];    
+    for (var i = 0; i < stackElements.length; i++) {
+        body += "\n    at " + stackElements[i];
+    }
+    return body
 }

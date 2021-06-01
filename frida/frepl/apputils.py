@@ -119,7 +119,8 @@ class AppUtils(AppAgent):
 
 
 if __name__ == "__main__":
-    my_apk = AppUtils("com.iqiyi.i18n")
+    my_apk = AppUtils("com.miui.personalassistant")
+    print(my_apk.getInfo())
     permissions = my_apk.getPermissions()
     print("----- DEFINES PERMISSION -------")
     for perm in permissions["defines"]:
