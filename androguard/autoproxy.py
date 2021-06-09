@@ -133,6 +133,6 @@ def delProxy():
 
 
 if __name__ == "__main__":
-    certs="/Users/listennter/mine-git-storage/Android-Tools-Storage/androguard/cert/9a5ba575.0,/Users/listennter/mine-git-storage/Android-Tools-Storage/androguard/cert/c8750f0d.0"
+    certs="/Users/listennter/mine-git-storage/Android-Tools-Storage/androguard/cert/9a5ba575.0"
     ret = pushCert(certs)
     print(ret)
