@@ -1,9 +1,12 @@
-send("load tmp.js success");
+send("load compontent starter .js success");
+
+var fd = null;
 
 rpc.exports = {
     launchactivity : (intent) => ActivityLauncher(intent),
     startservice : (intent) => ServiceStarter(intent),
     sendbroadcast : (intent) => BroadcastSender(intent),
+    interactprovider : (args) => InteractProvider(args),
     tmp : (str) => parseString(str)
 }
 
@@ -21,7 +24,7 @@ const ActivityLauncher = (intent) => {
 
         send(newIntent.toURI());
         context.startActivity(newIntent);
-        send("Activity successfully asked to strat");
+        send("Activity successfully asked to start");
     })
 }
 
@@ -47,6 +50,81 @@ const BroadcastSender = (intent) => {
     })
 }
 
+const InteractProvider = (args) => {
+    var ret = null;
+    var tmp = null;
+    wrapJavaperform(() => {
+        const Uri = Java.use("android.net.Uri");
+        const resolver = getApplicationContext().getContentResolver();
+
+        const args_json = JSON.parse(args);
+        const uri = Uri.parse(args_json.uri);
+        const params = args_json.params;
+        const type = args_json.action;
+
+        switch(type) {
+            case "query" :
+                const selection = params.selection;
+                const sortOrder = params.sortOrder;
+                const projection_list = params.projection;
+                const selectionArgs_list = params.selectionArgs;
+
+                var projection = null;
+                var selectionArgs = null;
+
+                if (projection_list != null) {
+                    var my_list = new Array();
+                    projection_list.forEach((element) => {
+                        my_list.push(element)
+                    })
+                    projection = Java.array("java.lang.String",my_list);
+                }
+
+                if (selectionArgs_list != null) {
+                    var my_list = null;
+                    selectionArgs_list.forEach((element) => {
+                        my_list.push(element)
+                    })
+                    selectionArgs = Java.array("java.lang.String",my_list);
+                }
+
+                tmp = resolver.query(uri,projection,selection,selectionArgs,sortOrder);
+                ret = {
+                    "status":"success",
+                    "action":"query",
+                    "content":JSON.stringify(tmp)
+                }
+                break;
+            case "openFile" :
+                const mode = params.mode;
+                fd = resolver.openFile(uri,mode,null);
+                ret = {
+                    "status":"success",
+                    "action":"openFile",
+                    "content":"None"
+                }
+                break;
+            case "call" : 
+                const method = params.method;
+                const arg = params.arg
+                tmp = resolver.call(uri,method,arg,null);
+                ret = {
+                    "status":"success",
+                    "action":"call",
+                    "content":JSON.stringify(tmp)
+                }
+                break;
+            default : 
+                ret = {
+                    "status":"error",
+                    "content":"UnSupport Type"
+                }
+        }
+    })
+
+    return ret
+}
+
 const wrapJavaperform = (fn) => {
     return new Promise((resolve,reject) => {
         Java.perform(() => {
@@ -64,12 +142,13 @@ const parseIntent = (intent) => {
     const my_bundle = JSON.parse(intent);
 
     const targetPackage = my_bundle.package_name;
-    const targetActivity = my_bundle.activity_name;
+    const targetActivity = my_bundle.component_name;
     const action = my_bundle.action;
     const data = my_bundle.data;
     
     const androidIntent = Java.use("android.content.Intent");
     const ComponentName = Java.use("android.content.ComponentName");
+    const Uri = Java.use("android.net.Uri")
     //const Context = Java.use("android.content.Context");
 
     var newIntent = androidIntent.$new();
@@ -83,7 +162,7 @@ const parseIntent = (intent) => {
     }
 
     if (data != undefined) {
-        newIntent.setData(data);
+        newIntent.setData(Uri.parse(data));
     }
 
     if (my_bundle.flags != undefined) {

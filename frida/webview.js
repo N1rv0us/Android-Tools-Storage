@@ -3,7 +3,8 @@ console.log("loading webview hooker ....");
 if (Java.available) {
     Java.perform(() => {
         //const webview = Java.use("android.webkit.WebView");
-        const webview = Java.use("com.miui.webkit_api.WebView");
+        //const webview = Java.use("com.miui.webkit_api.WebView");
+        const webview = Java.use("com.miui.webkit.WebView");
         const Arrays = Java.use("java.util.Arrays");
         const Map = Java.use("java.util.HashMap");
         const JavascriptInterface = Java.use("android.webkit.JavascriptInterface");
@@ -24,11 +25,14 @@ if (Java.available) {
 
         webview.setWebViewClient.implementation = function(client) {
             var ret = this.setWebViewClient(client);
-            const name = client.getClass().getName().toString();
+            //const name = client.getClass().getName().toString();
             //console.log("class : "+name);
 
             //client.shouldOverrideUrlLoading.overload("android.webkit.WebView","android.webkit.WebResourceRequest").implementation = function(webview,request) {
-            client.shouldOverrideUrlLoading.overload('com.miui.webkit_api.WebView', 'com.miui.webkit_api.WebResourceRequest').implementation = function(webview,request) {
+            //client.shouldOverrideUrlLoading.overload('com.miui.webkit_api.WebView', 'com.miui.webkit_api.WebResourceRequest').implementation = function(webview,request) {
+            client.shouldOverrideUrlLoading.overload('com.miui.webkit.WebView','com.miui.webkit.WebResourceRequest').implementation = function(webview,request){   
+                const ret = this.shouldOverrideUrlLoading(webview,request);    
+            
                 const cls_name = this.getClass().getName().toString();
                 const fromUrl = webview.getUrl();
                 const targetUrl = request.getUrl().toString();
@@ -48,10 +52,11 @@ if (Java.available) {
                 details["from"] = fromUrl;
                 details["to"] = targetUrl;
                 details["headers"] = requestHeaders;
+                details["is_intercept"] = ret
     
                 console.log('catch overloading url : '+JSON.stringify(details,null,"\t"));
     
-                const ret = this.shouldOverrideUrlLoading(webview,request);
+                
                 return ret;
             }
             return ret

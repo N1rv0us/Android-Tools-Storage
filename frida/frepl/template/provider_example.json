@@ -1,0 +1,36 @@
+// for query Content Provider
+{
+    "target":"PROVIDER",
+    "uri" : "content://com.xiaomi.mihomemanager.whitelistProvider/packageName",
+    "action" : "query",
+    "params" : {
+        "selection":"YOUR_SELECTION_HERE",
+        "sortOrder":"YOUR_SORT_ORDER_HERE",
+        "projection":["YOUR_PROJECTION_LIST_HERE"],
+        "selectionArgs":["YOUT_SELECTION_ARGS_LIST_HERE"]
+    }
+}
+
+// for call Content Provider 
+{
+    "target":"PROVIDER",
+    "uri": "content://com.xiaomi.mihomemanager.whitelistProvider/packageName",
+    "action": "call",
+    "params": {
+        "method" : "TARGAT_METHOD_NAME",
+        "arg" : "METHOD_ARGS"
+    }
+}
+
+
+// for openFile Content Provider
+{
+    "target":"PROVIDER",
+    "uri" : "content://com.xiaomi.mihomemanager.whitelistProvider/packageName",
+    "action" : "openFile",
+    "params": {
+        "mode" : "r/w/x"
+    }
+}
+
+

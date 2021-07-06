@@ -1,6 +1,7 @@
 from agent import AppAgent
 import os
 import json
+from pprint import pprint
 
 
 class AppUtils(AppAgent):
@@ -119,14 +120,23 @@ class AppUtils(AppAgent):
 
 
 if __name__ == "__main__":
-    my_apk = AppUtils("com.miui.personalassistant")
+    my_apk = AppUtils("com.miui.miwallpaper")
     print(my_apk.getInfo())
-    permissions = my_apk.getPermissions()
-    print("----- DEFINES PERMISSION -------")
-    for perm in permissions["defines"]:
-        print("- {0}".format(perm["name"]))
-        print("|__ protect:{0}".format(perm["protectLevel"]))
+    # permissions = my_apk.getPermissions()
+    # print("----- DEFINES PERMISSION -------")
+    # for perm in permissions["defines"]:
+    #     print("- {0}".format(perm["name"]))
+    #     print("|__ protect:{0}".format(perm["protectLevel"]))
 
-    print("----- USES PERMISSION -------")
-    for perm in permissions["uses"]:
-        print("- {0}".format(perm))
+    # print("----- USES PERMISSION -------")
+    # for perm in permissions["uses"]:
+    #     print("- {0}".format(perm))
+
+    pprint("Activitys : ")
+    pprint(my_apk.getActivities())
+    # pprint("Services : ")
+    # pprint(my_apk.getServices())
+    # pprint("Receivers : ")
+    # pprint(my_apk.getBroadcasts())
+    # pprint("Providers : ")
+    # pprint(my_apk.getProviders())

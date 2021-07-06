@@ -26,6 +26,10 @@ class AppAgent():
         self._connect_type = type
 
     def reload(self):
+        self._clear()
+        self._ready()
+
+    def _clear(self):
         try:
             self._session.detach()
         except frida.OperationCancelledError:

@@ -1,0 +1,18 @@
+{
+    "target":"ACTIVITY/SERVICE/BROADCAST",
+    "package_name":"TARGET_PACKAGE_NAME",
+    "component_name":"TARGET_COMPONENT_NAME",
+    "action":"TARGET_ACTION_NAME",
+    "data":"SET_YOUR_DATA_HERE",
+    "flag":["SET_YOUR_FLAG_LIST_HERE","ALLOW_NONE"],
+    "extra":[
+        {
+            "key":"key1",
+            "value":"value1"
+        },
+        {
+            "key":"key2",
+            "value":"value2"
+        }
+    ]
+}

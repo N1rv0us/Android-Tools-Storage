@@ -1,5 +1,5 @@
-var MonitorCallerPackages = ['com.UCMobile']
-var MonitorTargetPackages = ['com.tencent.mm']
+var MonitorCallerPackages = ['com.MillionGirls.bnn','com.miui.analytics',"com.miui.systemAdSolution"]
+var MonitorTargetPackages = ['com.xiaomi.market','com.miui.analytics',"com.miui.systemAdSolution"]
 
 var debug = false
 
@@ -81,7 +81,7 @@ function MonitorPackage(cType, action, intent) {
 
     if (debug || MonitorCallerPackages.indexOf(callingPackage) != -1 || MonitorTargetPackages.indexOf(targetPackageName) != -1) {
         if (cType != 'provider') {
-            detail += intent.toString()
+            detail += intent.toUri(1);
         } else {
             detail = 'content://'+ intent
         }
