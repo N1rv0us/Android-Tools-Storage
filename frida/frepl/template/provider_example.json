@@ -1,6 +1,7 @@
 // for query Content Provider
 {
     "target":"PROVIDER",
+    "src_package":"WHO_WILL_BE_THE_STARTER_ALLOW_NONE",
     "uri" : "content://com.xiaomi.mihomemanager.whitelistProvider/packageName",
     "action" : "query",
     "params" : {
@@ -14,6 +15,7 @@
 // for call Content Provider 
 {
     "target":"PROVIDER",
+    "src_package":"WHO_WILL_BE_THE_STARTER_ALLOW_NONE",
     "uri": "content://com.xiaomi.mihomemanager.whitelistProvider/packageName",
     "action": "call",
     "params": {
@@ -26,6 +28,7 @@
 // for openFile Content Provider
 {
     "target":"PROVIDER",
+    "src_package":"WHO_WILL_BE_THE_STARTER_ALLOW_NONE",
     "uri" : "content://com.xiaomi.mihomemanager.whitelistProvider/packageName",
     "action" : "openFile",
     "params": {

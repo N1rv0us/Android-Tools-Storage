@@ -63,11 +63,11 @@ class AppStarter(AppAgent):
 
 if __name__ == "__main__":
     my_starter = AppStarter()
-    my_starter.setTarget("system_server")
-    
 
     my_intent = open('./template/intent_example.json','r').read()
+    src_package = json.loads(my_intent)["src_package"]
     
+    my_starter.setTarget(src_package)
     my_starter.startActivity(my_intent)
 
     # intent template example is in ./template/intent_example.json
