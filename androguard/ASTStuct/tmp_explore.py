@@ -198,18 +198,37 @@ method_ast_str = '''
 '''
 
 import json
+from pprint import pprint
 
 # method_ast_str = method_ast_str.replace('\'','\"')
 # method_ast = json.loads(method_ast_str)
 method_ast = eval(method_ast_str)
 method_params = method_ast['params']
 method_ret = method_ast['ret']
+method_triple = method_ast['triple']
 
 print("#### Log parase pararms ####")
 print(str(type(method_params))+'  --->   '+str(method_params))
 for param in method_params:
   print(str(param))
 
-# print("#### Log two ####")
-# for params in method_params:
-#     print(str(params))
+print("### LOG parase return ####")
+print(str(type(method_ret))+" ----> "+str(method_ret))
+
+
+print("#### LOG PARSE TRIPLE ####")
+print(str(type(method_triple)) + "  ---->  "+str(method_triple))
+print("AST From class : "+method_triple[0])
+print("AST From method : {0} with description : {1}".format(method_triple[1],method_triple[2]))
+
+
+
+print("#### LOG PARSE BODY ####")
+method_body = method_ast['body']
+
+print("body type : "+str(type(method_body)) + "    length : "+str(len(method_body)))
+print("body Composition ONE ==> type : " + method_body[0])
+
+print('body Composition THREE ==> CONTENT : '+str(len(method_body[2])))
+
+pprint('body first Statement is ==> '+ str(len(method_body[2][1])))

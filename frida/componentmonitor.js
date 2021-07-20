@@ -1,5 +1,5 @@
-var MonitorCallerPackages = ['com.MillionGirls.bnn','com.miui.analytics',"com.miui.systemAdSolution"]
-var MonitorTargetPackages = ['com.xiaomi.market','com.miui.analytics',"com.miui.systemAdSolution"]
+var MonitorCallerPackages = ['com.dragon.read']
+var MonitorTargetPackages = ['com.xiaomi.market']
 
 var debug = false
 

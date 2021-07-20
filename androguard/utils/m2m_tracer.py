@@ -228,18 +228,19 @@ class M2MTracer:
 
 
 if __name__ == "__main__":
-    a,d,dx = AnalyzeAPK("/Users/listennter/DailyWorking/2021-06-21/pdd-self-launch/pdd.apk")
+    a,d,dx = AnalyzeAPK("/Users/listennter/DailyWorking/2021-07-04/shop_stealean_deeplink/fanqie.apk")
     my_tracer = M2MTracer(dx)
-    st_cls = "Lcom/xunmeng/pinduoduo/process_start_stat/ProcessTrace;"
-    st_method = "startByProvider"
-    st_descriptor = "(Ljava/lang/String; Z)V"
+    st_cls = "Lcom/bytedance/sdk/openadsdk/downloadnew/a/b;"
+    st_method = "q"
+    st_descriptor = "()V"
 
     ed_cls = "Landroid/content/Context;"
     ed_method = "startActivity"
     ed_descriptor = "(Landroid/content/Intent;)V"
     my_tracer.set_start_method(st_cls,st_method,st_descriptor)
 
-    # my_tracer.add_intercept_method_via_name(ed_cls,ed_method,ed_descriptor)
+    my_tracer.add_intercept_method_via_name(ed_cls,ed_method,ed_descriptor)
+    #my_tracer.set_xref(Xref.FROM)
     # pprint(my_tracer.intercept_methods)
     
     if my_tracer.run() == True:
@@ -248,4 +249,4 @@ if __name__ == "__main__":
     else:
         print("Failed to Run. PLS Check The Log")
 
-    pprint(my_tracer.isRecord)
+    #pprint(my_tracer.isRecord)

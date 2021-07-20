@@ -245,11 +245,11 @@ function printStack() {
 }
 
 function __printStack(stackElements) {
-    var body = "Stack: " + stackElements[0];    
-    for (var i = 0; i < stackElements.length; i++) {
-        body += "\n    at " + stackElements[i];
-    }
-    return body
+    // var body = "Stack: " + stackElements[0];    
+    // for (var i = 0; i < stackElements.length; i++) {
+    //     body += "\n    at " + stackElements[i];
+    // }
+    // return body
 }
 
 if (Java.available) {

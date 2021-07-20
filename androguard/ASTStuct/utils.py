@@ -22,17 +22,16 @@ def get_method_ast(dx:Analysis,method:EncodedMethod):
     return dv.get_ast()
 
 if __name__ == "__main__":
-    a,d,dx = AnalyzeAPK("/Users/listennter/DailyWorking/apks/CloudService.apk")
-#     ('com/miui/cloudservice/ui/ja$b',
-#   'handleMessage',
-#   '(Landroid/os/Message;)V')
+    a,d,dx = AnalyzeAPK("/Users/listennter/DailyWorking/apks/ast.apk")
 
-    method = dx.get_method_by_name('Lcom/miui/cloudservice/ui/MiCloudHybridActivity$a;','shouldOverrideUrlLoading','(Lmiui/hybrid/HybridView; Ljava/lang/String;)Z')
-    method = dx.get_method_by_name('Lcom/miui/cloudservice/ui/MiCloudHybridActivity;','b','(Lmiui/hybrid/HybridView; Ljava/lang/String;)Z')
+    # method = dx.get_method_by_name('Lcom/miui/cloudservice/ui/MiCloudHybridActivity$a;','shouldOverrideUrlLoading','(Lmiui/hybrid/HybridView; Ljava/lang/String;)Z')
+    # method = dx.get_method_by_name('Lcom/miui/cloudservice/ui/MiCloudHybridActivity;','b','(Lmiui/hybrid/HybridView; Ljava/lang/String;)Z')
 
-    print(method)
+    # print(method)
 
-    my_ast = get_method_ast(dx,method)
+    target = dx.get_method_by_name('Lcom/test/ast/MainActivity;','add','(I I)I')
+
+    my_ast = get_method_ast(dx,target)
     pprint(my_ast)
 
 

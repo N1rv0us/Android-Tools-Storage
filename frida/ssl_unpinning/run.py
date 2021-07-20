@@ -61,7 +61,7 @@ def frida_part(process):
 
 if __name__ == "__main__":
     # test for script
-    frida_part("com.UCMobile")
+    frida_part("com.dragon.read")
     # certs = get_certificate("www.mi.com")
     # for cert in certs :
     #     print(crypto.dump_certificate(crypto.FILETYPE_ASN1, cert))
