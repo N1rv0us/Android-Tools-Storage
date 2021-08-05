@@ -21,6 +21,12 @@ var ctx = null;
 var pm = null;
 var pinfo = null;
 
+rpc.exports = {
+    init : () => envInit(),
+    permlist : () => getPermissionList(),
+    permcheck : (permission) => checkPermission(permission),
+    permctrl : () => hookPermissionRequest()
+}
 
 const envInit = () => {
     return wrapJavaperform(() => {
@@ -86,16 +92,3 @@ const hookPermissionRequest = () => {
         
     })
 }
-
-envInit();
-Java.perform(() => {
-    pm.buildRequestPermissionsIntent
-    .overload('[Ljava.lang.String;')
-    .implementation = function(permissions) {
-        var intent = this.buildRequestPermissionsIntent(permissions);
-        console.warn("building request ");
-        console.log('request permission list : ',JSON.stringify(permissions,null,'\t'))
-        console.log("result intent : ",intent.toUri(0));
-        return intent;
-    }
-})
