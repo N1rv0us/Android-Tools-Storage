@@ -11,7 +11,7 @@ def printF(tag,content):
 
 class AppStarter(AppAgent):
     def __init__(self,package_name=None):
-        super.__init__()
+        super().__init__()
         if package_name == None:
             printF("WARN","Initialization without setting the startup package name, Intent will start as system_server")
             self._package_name = "system_server"
@@ -20,7 +20,7 @@ class AppStarter(AppAgent):
 
         self.result = None
         self.history = []
-        self._user_script_path = os.getcwd() + '/inject/compontent_starter.js'
+        self._user_script_path = os.getcwd() + '/inject/component_starter.js'
 
         self._ready()
 
@@ -65,9 +65,8 @@ if __name__ == "__main__":
     my_starter = AppStarter()
 
     my_intent = open('./template/intent_example.json','r').read()
-    src_package = json.loads(my_intent)["src_package"]
-    
-    my_starter.setTarget(src_package)
+    target_package = json.loads(my_intent)["package_name"]
+    my_starter.setTarget(target_package)
     my_starter.startActivity(my_intent)
 
     # intent template example is in ./template/intent_example.json
