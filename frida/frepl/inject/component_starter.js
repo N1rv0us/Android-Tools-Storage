@@ -145,6 +145,7 @@ const parseIntent = (intent) => {
     const targetActivity = my_bundle.component_name;
     const action = my_bundle.action;
     const data = my_bundle.data;
+    const flags = my_bundle.flags;
     
     const androidIntent = Java.use("android.content.Intent");
     const ComponentName = Java.use("android.content.ComponentName");
@@ -165,10 +166,10 @@ const parseIntent = (intent) => {
         newIntent.setData(Uri.parse(data));
     }
 
-    if (my_bundle.flags != undefined) {
+    if (flags != undefined) {
         var my_flags = 0;
-        for (const flag in my_bundle.flags) {
-            my_flags |= flags[flag];
+        for (var index = 0; index < flags.length; index ++) {
+            my_flags |= allflags[flags[index]];
         }
         newIntent.setFlags(my_flags);
     }
@@ -182,7 +183,7 @@ const parseIntent = (intent) => {
     return newIntent;
 }
 
-const flags = {       
+const allflags = {       
     'ACTIVITY_BROUGHT_TO_FRONT': 0x00400000,
     'ACTIVITY_CLEAR_TASK': 0x00008000,
     'ACTIVITY_CLEAR_TOP': 0x04000000,
@@ -190,6 +191,10 @@ const flags = {
     'ACTIVITY_EXCLUDE_FROM_RECENTS': 0x00800000,
     'ACTIVITY_FORWARD_RESULT': 0x02000000,
     'ACTIVITY_LAUNCHED_FROM_HISTORY': 0x00100000,
+    'FLAG_ACTIVITY_LAUNCH_ADJACENT': 0x00001000,
+    'FLAG_ACTIVITY_MATCH_EXTERNAL': 0x00000800,
+    'FLAG_ACTIVITY_NEW_DOCUMENT': 0x00080000,
+    'FLAG_ACTIVITY_NEW_TASK': 0x10000000,
     'ACTIVITY_MULTIPLE_TASK': 0x08000000,
     'ACTIVITY_NEW_TASK': 0x10000000,
     'ACTIVITY_NO_ANIMATION': 0x00010000,
@@ -204,5 +209,5 @@ const flags = {
     'FROM_BACKGROUND': 0x00000004,
     'GRANT_READ_URI_PERMISSION': 0x00000001,
     'GRANT_WRITE_URI_PERMISSION': 0x00000002,
-    'RECEIVER_REGISTERED_ONLY': 0x40000000 
+    'RECEIVER_REGISTERED_ONLY': 0x40000000
 }
