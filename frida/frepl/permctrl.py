@@ -13,6 +13,7 @@ class PermCtrl(AppAgent):
         self.obt_permission_list = set()
 
         self._ready()
+        self._api.init()
 
 
     def my_message_handler(self, message, payload):

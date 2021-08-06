@@ -3,99 +3,25 @@ const wrapJavaperform = (fn) => {
         Java.perform(() => {
             try {
                 resolve(fn());
-            } catch(e) {
-                send(e);
-                reject(e)
+            } catch(error) {
+                send(error);
+                reject(error);
             }
-        })
+        });
     });
 };
 
-const back2py = (tag,obj) => {
-    console.warn("catch ",tag," sending back");
-    console.log(JSON.stringify(obj,null,'\t'));
-}
-
-
-var ctx = null;
-var pm = null;
-var pinfo = null;
-
-
-const envInit = () => {
-    return wrapJavaperform(() => {
-        ctx = Java.use("android.app.ActivityThread").currentApplication().getApplicationContext();
-        pm = ctx.getPackageManager();
-        var flag = 0x00001000;
-        pinfo = pm.getPackageInfo(ctx.getPackageName(),flag);
-    })
-}
-
-const getPermissionList = () => {
-    if (ctx == null || pm == null) {
-        envInit();
-    }
-
-    return wrapJavaperform(() => {
-        try {
-            var ret = pinfo['requestedPermissions'].value;
-            if (typeof(ret) == 'object') {
-                var relist = new Array();
-                for (let i = 0; i < ret.length; i++) {
-                    relist[i] = ret[i].toString();
-                }
-                return relist;
-            }
-            return ret;
-        } catch(error) {
-            return null;
-        }
-    })    
-}
-
-const checkPermission = (permission) => {
-    if (ctx == null) {
-        envInit();
-    }
-
-    return wrapJavaperform(() => {
-        var ret = ctx.checkSelfPermission(permission);
-        if(ret == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    })
-}
-
-const hookPermissionRequest = () => {
-    return wrapJavaperform(() => {
-        var Activity = Java.use("android.app.Activity");
-
-        Activity.requestPermissions
-        .overload('[Ljava.lang.String;','int')
-        .implementation = function(permissions,requestcode) {
-            var recorder = {}
-            recorder['activity'] = JSON.stringify(this);
-            recorder['permissions'] = permissions;
-            recorder['reqcode'] = requestcode;
-            back2py("REQUEST_PERMISSION",recorder);
-
-            return this.requestPermissions(permissions,requestcode);
-        }
-        
-    })
-}
-
-envInit();
 Java.perform(() => {
-    pm.buildRequestPermissionsIntent
-    .overload('[Ljava.lang.String;')
-    .implementation = function(permissions) {
-        var intent = this.buildRequestPermissionsIntent(permissions);
-        console.warn("building request ");
-        console.log('request permission list : ',JSON.stringify(permissions,null,'\t'))
-        console.log("result intent : ",intent.toUri(0));
-        return intent;
+    var a = Java.use("com.android.server.am.ActivityManagerService");
+    var am = a.startService.overload('android.app.IApplicationThread', 'android.content.Intent', 'java.lang.String', 'boolean', 'java.lang.String', 'java.lang.String', 'int');
+    console.log(JSON.stringify(a));
+    console.log(am.implementation);
+
+    am.implementation = function() {
+        console.log("helllll");
+        return this.startService.apply(this,arguments);
     }
+
+    console.log(JSON.stringify(am.implementation))
+    am.implementation = null;
 })
