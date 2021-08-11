@@ -73,7 +73,8 @@ public class Bindump {
     public static int getSelfHoldingNode() throws IOException {
         // Get the binder node information of the current process via /sys/kernel/debug/binder/proc
         int mypid = Integer.parseInt(new File("/proc/self").getCanonicalFile().getName());
-        String binderstat = readFile(String.format("/sys/kernel/debug/binder/proc/%d", mypid));
+        ////move /sys/kernel/debug/binder/proc to /dev/binderfs/binder_logs/proc
+        String binderstat = readFile(String.format("/dev/binderfs/binder_logs/proc/%d", mypid));
         return extractStatAndGetServiceNode(binderstat);
     }
 
@@ -168,7 +169,8 @@ public class Bindump {
     private static List<ServiceUsage> iterateProcFs(int nodeid)
     {
         List<ServiceUsage> usageList = new ArrayList<>();
-        File procroot = new File("/sys/kernel/debug/binder/proc/");
+        //move /sys/kernel/debug/binder/proc to /dev/binderfs/binder_logs/proc
+        File procroot = new File("/dev/binderfs/binder_logs/proc/");
         for(File statFile: procroot.listFiles())
         {
             try {
