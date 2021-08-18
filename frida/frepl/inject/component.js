@@ -229,10 +229,10 @@ const hService = () => {
 
 
 // set run here;
-// envInit();
-// setSrcPackage(['com.baidu.searchbox']);
-// setDstPackage(['com.baidu.searchbox']);
-// hActivity();
-// hService();
-// hBroadcast();
-// hProvider();
+envInit();
+setSrcPackage(['com.lbe.security.miui','com.miui.securitycenter']);
+setDstPackage(['com.lbe.security.miui','com.miui.securitycenter']);
+hActivity();
+hService();
+hBroadcast();
+hProvider();

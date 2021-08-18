@@ -92,3 +92,11 @@ const hookPermissionRequest = () => {
         
     })
 }
+
+// var ret = checkPermission("android.permission.ACCESS_FINE_LOCATION");
+// //var ret = getPermissionList()
+// ret.then((data) => {
+//     console.log(data)
+// })
+
+hookPermissionRequest()
