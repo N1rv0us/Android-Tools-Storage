@@ -149,6 +149,32 @@ if (Java.available) {
             
             return ret;
         }
+        
+        webview.evaluateJavascript
+        .overload('java.lang.String','android.webkit. ValueCallback')
+        .implementation = function(script,callback) {
+            var details = {};
+            details['content'] = script;
+            details['url'] = this.getUrl();
+
+            console.warn("find js code inject to page : ");
+            console.log(JSON.stringify(details,null,'\t'));
+            return this.evaluateJavascript(script,callback);
+        }
+        
+        webview.loadDataWithBaseURL
+        .overload('java.lang.String','java.lang.String','java.lang.String','java.lang.String','java.lang.String')
+        .implementation = function(baseurl,data,mineType,encoding,historyurl) {
+            var details = {};
+            details['base'] = baseurl;
+            details['data'] = data;
+            details['mineType'] = mineType;
+            details['encode'] = encoding;
+            details['history'] = historyurl;
+
+            console.log("loading data with base url : ",JSON.stringify(details,null,'\t'));
+            return this.loadDataWithBaseURL.apply(this,arguments);
+        }
     })
 }
 
